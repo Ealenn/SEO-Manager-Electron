@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title></title>
+
+    <link rel="stylesheet" href="res/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="res/css/bootstrap-theme-dark.min.css" />
+  </head>
+  <body>
+
+    <div class="container">
+
+      <div class="panel panel-default" style="margin-top:10px">
+        <div class="panel-heading">
+          <h3 class="panel-title">Website</h3>
+        </div>
+        <div class="panel-body">
+          <form method="post" action="#" id="form_url">
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon">URL : </span>
+                <input type="text" name="url" class="form-control">
+                <span class="input-group-btn">
+                  <button class="btn btn-default" type="submit">OK</button>
+                </span>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- PICTURE
+      <div class="row">
+        <div class="col-md-6"><img class="img-responsive img-thumbnail center-block" src="res/img/placeholder.png" id="picture_desktop"></div>
+        <div class="col-md-6"><img class="img-responsive img-thumbnail center-block" src="res/img/placeholder.png" id="picture_iphone"></div>
+      </div>
+       END PICTURE -->
+
+      <!-- INFO -->
+      <div id="info"></div>
+      <script id="info-template" type="text/x-handlebars-template">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{title}}</h3>
+          </div>
+          <div class="panel-body">
+            Panel content
+          </div>
+        </div>
+      </script>
+      <!-- END INFO -->
+
+      <!-- KEYWORDS -->
+      <div id="keywords"></div>
+      <script id="keywords-template" type="text/x-handlebars-template">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Keywords</h3>
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped">
+              <thead>
+               <tr>
+                 <th>Word</th>
+                 <th>Repeat</th>
+               </tr>
+             </thead>
+             <tbody>
+              {{#each key}}
+                {{#ifSup this.count 5}}
+                <tr>
+                  <td>{{this.word}}</td>
+                  <td>{{this.count}}</td>
+                </tr>
+                {{/ifSup}}
+              {{/each}}
+            </tbody>
+            </table>
+          </div>
+        </div>
+      </script>
+      <!-- END KEYWORDS -->
+
+
+    </div>
+
+
+  <script type="text/javascript" src="res/js/jquery2.1.1.min.js"></script>
+  <script type="text/javascript" src="res/js/jquery.min.js"></script>
+  <script type="text/javascript" src="res/js/handlebars-v4.0.5.js"></script>
+  <script type="text/javascript" src="res/js/bootstrap.min.js"></script>
+  <script>
+  /* INCLUDE */
+  var ArrayTemplates = [];
+  var Website = require('../src/Website.class.js');
+
+  /* HANDLEBARS HELPER REGISTRE */
+  Handlebars.registerHelper('ifEgal', function(v1, v2, options) {if(v1 === v2) {return options.fn(this);}return options.inverse(this);});
+  Handlebars.registerHelper('ifSup', function(v1, v2, options) {if(v1 >= v2) {return options.fn(this);}return options.inverse(this);});
+  /* END HANDLEBARS HELPER REGISTRE */
+
+  /* Template */
+  var generateTemplate = function(name, data){
+    ArrayTemplates.push(name);
+    var template = Handlebars.compile($("#" + name + "-template").html());
+    var html = template(data);
+    $('#' + name).html(html);
+  }
+  /* End Template */
+
+  /* Clean Template */
+  var clean = function(){
+    ArrayTemplates.forEach(function(element) {
+      $("#" + element).html(' ');
+    });
+  }
+  /* End Clean Template */
+
+
+  $(document).ready(function(){
+    /* Form URL */
+    $('#form_url').submit(function(event) {
+        event.preventDefault();
+        clean();
+        var $inputs = $('#form_url :input');
+        var values = {};
+
+        $inputs.each(function() {
+            values[this.name] = $(this).val();
+        });
+
+        Analyse(values['url']);
+    });
+    /* End Form URL */
+
+    /* Website */
+    var Analyse = function(url){
+      var myWebsite = Website.FromUrl(url, (Website) =>{
+        var Body = Website.getBody();
+        var Meta = Website.getMeta();
+
+        /* Pictures
+        Website.getPicture((obj)=>{
+          $("#picture_"+obj.type).attr('src', obj.addr);
+        });*/
+
+        /* Keyword */
+        var ArrayKeyword = Website.getKeywords();
+        generateTemplate('keywords', {key: ArrayKeyword});
+
+        /* Info */
+        Meta.AnalyseHeader(function(info){
+          generateTemplate('info', info);
+        });
+      });
+    }
+
+  });
+  </script>
+  </body>
+</html>

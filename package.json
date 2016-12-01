@@ -1,0 +1,36 @@
+{
+  "name": "seo_manager",
+  "version": "0.0.1",
+  "description": "SEO Tools",
+  "main": "app.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-packager ./ SeoManager --all --out ./packager --overwrite --icon=./view/res/img/app.ico",
+    "generate-docs": "jsdoc ./src/ -d docs -t node_modules/loke-jsdoc-theme --verbose"
+  },
+  "keywords": [
+    "seo",
+    "tools",
+    "html",
+    "google",
+    "yahoo",
+    "qwant",
+    "bing"
+  ],
+  "author": "Ealen",
+  "license": "ISC",
+  "dependencies": {
+    "density": "^0.1.0",
+    "electron": "^1.4.10",
+    "electron-packager": "^8.3.0",
+    "electron-prebuilt": "^1.4.10",
+    "jsdom": "^9.8.3",
+    "pageres": "^4.2.0",
+    "request": "^2.79.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.4.3",
+    "loke-jsdoc-theme": "^2.1.0",
+    "electron-debug": "^1.1.0"
+  }
+}
