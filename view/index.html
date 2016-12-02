@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="res/css/bootstrap.min.css" />
     <link rel="stylesheet" href="res/css/bootstrap-theme-dark.min.css" />
+    <link href="res/css/lightbox.min.css" rel="stylesheet">
   </head>
   <body>
 
@@ -46,6 +47,33 @@
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="panel-body">
+
+              <div class="col-lg-3 col-md-3 col-xs-3 thumb">
+                Desktop (1920 x 1080)
+                <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_desktopHD">
+                    <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_desktopHD">
+                </a>
+              </div>
+              <div class="col-lg-3 col-md-3 col-xs-3 thumb">
+                Desktop (1024 x 768)
+                <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_desktop">
+                    <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_desktop">
+                </a>
+              </div>
+              <div class="col-lg-3 col-md-3 col-xs-3 thumb">
+                Microsoft Surface (1366 x 768)
+                <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_microsoftSurface">
+                    <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_microsoftSurface">
+                </a>
+              </div>
+              <div class="col-lg-3 col-md-3 col-xs-3 thumb">
+                iPhone 5s (1136 x 640)
+                <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_iphone">
+                    <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_iphone">
+                </a>
+              </div>
+
+
             <b>Meta Description : </b> {{description}}
             <hr />
             <b>Meta Keywords : </b> {{keywords}}
@@ -144,6 +172,7 @@
   <script type="text/javascript" src="res/js/jquery.min.js"></script>
   <script type="text/javascript" src="res/js/handlebars-v4.0.5.js"></script>
   <script type="text/javascript" src="res/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="res/js/lightbox.min.js"></script>
   <script>
   /* INCLUDE */
   var ArrayTemplates = [];
@@ -197,22 +226,6 @@
         var Body = Website.getBody();
         var Meta = Website.getMeta();
 
-        /* Pictures
-        Website.getPicture((obj)=>{
-          $("#picture_"+obj.type).attr('src', obj.addr);
-        });*/
-
-        /* Keyword */
-        var ArrayKeyword = Website.getKeywords();
-        generateTemplate('keywords', {key: ArrayKeyword});
-
-        /* W3C */
-        Website.w3c('json', function(res){
-          if(res.messages[0]){
-            generateTemplate('w3c', {array_message: res.messages});
-          }
-        });
-
         /* Info */
         Meta.AnalyseHeader(function(info){
           /* Template Info */
@@ -232,7 +245,26 @@
 
           generateTemplate('info', info);
           generateTemplate('opengraph', info);
+
+          /* Pictures */
+          Website.getPicture((obj)=>{
+            $('#a_' + obj.type).attr('href', obj.addr);
+            $('#img_' + obj.type).attr('src', obj.addr);
+          });
+
         });
+
+        /* Keyword */
+        var ArrayKeyword = Website.getKeywords();
+        generateTemplate('keywords', {key: ArrayKeyword});
+
+        /* W3C */
+        Website.w3c('json', function(res){
+          if(res.messages[0]){
+            generateTemplate('w3c', {array_message: res.messages});
+          }
+        });
+
       });
     }
 

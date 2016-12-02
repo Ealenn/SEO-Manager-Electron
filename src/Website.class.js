@@ -33,22 +33,23 @@ class Website{
 
   /** PICTURES
    * @param {string} URL URL to generate PICTURES
-   * @param {Requester~requestCallback} callback function(obj) obj = {type, addr} | type : iphone or desktop
+   * @param {Requester~requestCallback} callback function(obj) obj = {type, addr} | type : desktopHD, desktop, microsoftSurface, iphone
    */
   getPicture(callback){
     var Pageres = require('pageres');
 
-    var pageres_iphone = new Pageres({delay: 2, filename: 'iphone', crop: true})
-        .src(this.url, ['iphone 5s'])
-        .dest(__dirname)
-        .run()
-        .then(() => callback({type: 'iphone', addr: __dirname + '/iphone.png'}));
+    var screenshot = function(url, name, resolution, callback){
+      var screen = new Pageres({delay: 2, filename: name, crop: true})
+          .src(url, [resolution])
+          .dest(__dirname)
+          .run()
+          .then(() => callback({type: name, addr: __dirname + '/' + name + '.png'}));
+    }
 
-    var pageres_desktop = new Pageres({delay: 2, filename: 'desktop', crop: true})
-        .src(this.url, ['1920x1080'])
-        .dest(__dirname)
-        .run()
-        .then(() => callback({type: 'desktop', addr: __dirname + '/desktop.png'}));
+    screenshot(this.url, 'desktopHD', '1920x1080', callback);
+    screenshot(this.url, 'desktop', '1024x768', callback);
+    screenshot(this.url, 'microsoftSurface', '1366x768', callback);
+    screenshot(this.url, 'iphone', 'iphone 5s', callback);
   }
 
   /** GET WEBSITE FROM URL
