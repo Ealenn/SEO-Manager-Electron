@@ -83,6 +83,39 @@
       </script>
       <!-- END KEYWORDS -->
 
+      <!-- w3c -->
+      <div id="w3c"></div>
+      <script id="w3c-template" type="text/x-handlebars-template">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">W3C</h3>
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped table-hover ">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Message</th>
+                  <th>Extract</th>
+                  <th>Line</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each array_message}}
+                <tr>
+                  <td>{{type}}</td>
+                  <td>{{message}}</td>
+                  <td>{{extract}}</td>
+                  <td>{{lastLine}}</td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </script>
+      <!-- END w3c -->
+
 
     </div>
 
@@ -99,6 +132,8 @@
   /* HANDLEBARS HELPER REGISTRE */
   Handlebars.registerHelper('ifEgal', function(v1, v2, options) {if(v1 === v2) {return options.fn(this);}return options.inverse(this);});
   Handlebars.registerHelper('ifSup', function(v1, v2, options) {if(v1 >= v2) {return options.fn(this);}return options.inverse(this);});
+  Handlebars.registerHelper('list', function(context, options) {var ret = "<ul>";for(var i=0, j=context.length; i<j; i++) {ret = ret + "<li>" + options.fn(context[i]) + "</li>";}return ret + "</ul>";});
+  Handlebars.registerHelper('each', function(context, options) {var ret = "";for(var i=0, j=context.length; i<j; i++) {ret = ret + options.fn(context[i]);}return ret;});
   /* END HANDLEBARS HELPER REGISTRE */
 
   /* Template */
@@ -149,6 +184,12 @@
         /* Keyword */
         var ArrayKeyword = Website.getKeywords();
         generateTemplate('keywords', {key: ArrayKeyword});
+
+        /* W3C */
+        Website.w3c('json', function(res){
+          console.log(res);
+          generateTemplate('w3c', {array_message: res.messages});
+        });
 
         /* Info */
         Meta.AnalyseHeader(function(info){

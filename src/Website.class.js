@@ -18,6 +18,19 @@ class Website{
     return density(this.html).getDensity();
   }
 
+  /**
+   * @param {string} output json / html
+   * @param {Requester~requestCallback} callback function(res)
+   */
+  w3c(output, callback){
+    var w3cjs = require('w3cjs');
+    var results = w3cjs.validate({
+        input: this.html,
+        output: output,
+        callback: callback
+    });
+  }
+
   /** PICTURES
    * @param {string} URL URL to generate PICTURES
    * @param {Requester~requestCallback} callback function(obj) obj = {type, addr} | type : iphone or desktop
