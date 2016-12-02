@@ -31,7 +31,7 @@ class Meta {
 
   /**
    * Title And Description
-   * @param {obj} JSON {title, (Elements)meta, (Elements)links}
+   * @param {obj} JSON {title, keywords, description, (Elements)meta, (Elements)links, (HTMLCollection)openGraph, (Bool)schema}
    */
   AnalyseHeader(callback){
     var jsdom = require("jsdom");
@@ -42,6 +42,49 @@ class Meta {
       R.title = window.document.getElementsByTagName("title")[0].innerHTML;
       R.meta = window.document.getElementsByTagName("meta");
       R.links = window.document.getElementsByTagName("link");
+
+      /* Function Filter */
+      var filterMeta = function(attribute, contains){
+        var array = [];
+        for (var i = 0; i < R.meta.length; i++) {
+          var buff = R.meta[i].getAttribute(attribute);
+          if(buff){
+            if (buff.indexOf(contains) !== -1) {
+              var title = R.meta[i].name;
+              if(!title){
+                title = R.meta[i].attributes[0].nodeValue;
+              }
+
+              array.push({
+                name:title,
+                content:R.meta[i].content
+              });
+            }
+          }
+        }
+        return array;
+      }
+
+      /* OpenGraph */
+      R.openGraph = filterMeta('property', 'og:');
+
+      /* Schema */
+      R.schema = false;
+      var sh = this.html.indexOf('itemtype="http://schema.org');
+      if(sh !== -1){R.schema = true;}
+
+      /* Keyword and Description */
+      for (var i = 0; i < R.meta.length; i++) {
+        var buff = R.meta[i];
+
+        if(buff.name == 'keywords'){
+          R.keywords = buff.content;
+        }
+
+        if(buff.name == 'description'){
+          R.description = buff.content;
+        }
+      }
 
       callback(R);
     });

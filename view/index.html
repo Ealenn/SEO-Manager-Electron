@@ -41,12 +41,32 @@
       <!-- INFO -->
       <div id="info"></div>
       <script id="info-template" type="text/x-handlebars-template">
-        <div class="panel panel-default">
+        <div class="panel panel-{{infoColor}}">
           <div class="panel-heading">
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="panel-body">
-            Panel content
+            <b>Meta Description : </b> {{description}}
+            <hr />
+            <b>Meta Keywords : </b> {{keywords}}
+          </div>
+        </div>
+      </script>
+      <!-- END INFO -->
+
+      <!-- opengraph -->
+      <div id="opengraph"></div>
+      <script id="opengraph-template" type="text/x-handlebars-template">
+        <div class="panel panel-{{openGraphColor}}">
+          <div class="panel-heading">
+            <h3 class="panel-title">OpenGraph</h3>
+          </div>
+          <div class="panel-body">
+            <ul>
+              {{#each openGraph}}
+              <li><b>{{name}} </b>: {{{content}}}</li>
+              {{/each}}
+            </ul>
           </div>
         </div>
       </script>
@@ -55,7 +75,7 @@
       <!-- KEYWORDS -->
       <div id="keywords"></div>
       <script id="keywords-template" type="text/x-handlebars-template">
-        <div class="panel panel-default">
+        <div class="panel panel-info">
           <div class="panel-heading">
             <h3 class="panel-title">Keywords</h3>
           </div>
@@ -86,7 +106,7 @@
       <!-- w3c -->
       <div id="w3c"></div>
       <script id="w3c-template" type="text/x-handlebars-template">
-        <div class="panel panel-default">
+        <div class="panel panel-danger">
           <div class="panel-heading">
             <h3 class="panel-title">W3C</h3>
           </div>
@@ -103,7 +123,7 @@
               <tbody>
                 {{#each array_message}}
                 <tr>
-                  <td>{{type}}</td>
+                  <td>{{w3c_label type}}</td>
                   <td>{{message}}</td>
                   <td>{{extract}}</td>
                   <td>{{lastLine}}</td>
@@ -134,6 +154,7 @@
   Handlebars.registerHelper('ifSup', function(v1, v2, options) {if(v1 >= v2) {return options.fn(this);}return options.inverse(this);});
   Handlebars.registerHelper('list', function(context, options) {var ret = "<ul>";for(var i=0, j=context.length; i<j; i++) {ret = ret + "<li>" + options.fn(context[i]) + "</li>";}return ret + "</ul>";});
   Handlebars.registerHelper('each', function(context, options) {var ret = "";for(var i=0, j=context.length; i<j; i++) {ret = ret + options.fn(context[i]);}return ret;});
+  Handlebars.registerHelper('w3c_label', function(text) {text = Handlebars.escapeExpression(text);var design = 'default';switch (text) {case 'error': design = 'danger'; break;case 'info': design = 'info'; break;default: design = 'default'; break;}return new Handlebars.SafeString('<span class="label label-' + design + '">' + text + '</span>');});
   /* END HANDLEBARS HELPER REGISTRE */
 
   /* Template */
@@ -187,13 +208,30 @@
 
         /* W3C */
         Website.w3c('json', function(res){
-          console.log(res);
-          generateTemplate('w3c', {array_message: res.messages});
+          if(res.messages[0]){
+            generateTemplate('w3c', {array_message: res.messages});
+          }
         });
 
         /* Info */
         Meta.AnalyseHeader(function(info){
+          /* Template Info */
+          if(info.title && info.description && info.keywords){info.infoColor = 'success';} else {info.infoColor = 'danger';}
+          if(!info.title){info.title = 'ERROR MESSAGE'}
+          if(!info.description){info.description = 'ERROR MESSAGE'}
+          if(!info.keywords){info.keywords = 'ERROR MESSAGE'}
+
+          /* Template OpenGraph */
+          if(info.openGraph[0]){info.openGraphColor = 'success';} else {
+            info.openGraphColor = 'danger';
+            info.openGraph[0] = {
+              name: 'ERROR MESSAGE',
+              content: '<a href="http://ogp.me/">http://ogp.me/</a>'
+            }
+          }
+
           generateTemplate('info', info);
+          generateTemplate('opengraph', info);
         });
       });
     }
