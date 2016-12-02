@@ -31,6 +31,26 @@ class Website{
     });
   }
 
+  /**
+   * @param {Requester~requestCallback} callback function(res)
+   */
+  w3c_css(callback){
+    var validator = require('w3c-css');
+
+    validator.validate(this.url, function(err, data) {
+      if(err) {
+        console.error(err);
+      } else {
+        //console.log(data.errors);
+        callback(data.errors);
+
+        // validation warnings
+        //console.log('validation warnings', data.warnings);
+      }
+
+    });
+  }
+
   /** PICTURES
    * @param {string} URL URL to generate PICTURES
    * @param {Requester~requestCallback} callback function(obj) obj = {type, addr} | type : desktopHD, desktop, microsoftSurface, iphone

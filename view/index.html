@@ -136,7 +136,7 @@
       <script id="w3c-template" type="text/x-handlebars-template">
         <div class="panel panel-danger">
           <div class="panel-heading">
-            <h3 class="panel-title">W3C</h3>
+            <h3 class="panel-title">W3C HTML <span class="label label-default">{{nb_errors}}</span></h3>
           </div>
           <div class="panel-body">
             <table class="table table-striped table-hover ">
@@ -164,6 +164,45 @@
       </script>
       <!-- END w3c -->
 
+      <!-- w3ccss -->
+      <div id="w3ccss"></div>
+      <script id="w3ccss-template" type="text/x-handlebars-template">
+        <div class="panel panel-danger">
+          <div class="panel-heading">
+            <h3 class="panel-title">W3C CSS <span class="label label-default">{{nb_errors}}</span></h3>
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped table-hover ">
+              <thead>
+                <tr>
+                  <th>Context</th>
+                  <th>Subtype</th>
+                  <th>Error Type</th>
+                  <th>Message</th>
+                  <th>Type</th>
+                  <th>Line</th>
+                  <th>uri</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each errors}}
+                <tr>
+                  <td>{{context}}</td>
+                  <td>{{errorSubtype}}</td>
+                  <td>{{errorType}}</td>
+                  <td>{{message}}</td>
+                  <td>{{type}}</td>
+                  <td>{{line}}</td>
+                  <td>{{url}}</td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </script>
+      <!-- END w3c -->
+
 
     </div>
 
@@ -182,7 +221,13 @@
   Handlebars.registerHelper('ifEgal', function(v1, v2, options) {if(v1 === v2) {return options.fn(this);}return options.inverse(this);});
   Handlebars.registerHelper('ifSup', function(v1, v2, options) {if(v1 >= v2) {return options.fn(this);}return options.inverse(this);});
   Handlebars.registerHelper('list', function(context, options) {var ret = "<ul>";for(var i=0, j=context.length; i<j; i++) {ret = ret + "<li>" + options.fn(context[i]) + "</li>";}return ret + "</ul>";});
-  Handlebars.registerHelper('each', function(context, options) {var ret = "";for(var i=0, j=context.length; i<j; i++) {ret = ret + options.fn(context[i]);}return ret;});
+  Handlebars.registerHelper('each', function(context, options) {
+    var ret = "";
+    for(var i=0, j=context.length; i<j; i++) {
+      ret = ret + options.fn(context[i]);
+    }
+    return ret;
+  });
   Handlebars.registerHelper('w3c_label', function(text) {text = Handlebars.escapeExpression(text);var design = 'default';switch (text) {case 'error': design = 'danger'; break;case 'info': design = 'info'; break;default: design = 'default'; break;}return new Handlebars.SafeString('<span class="label label-' + design + '">' + text + '</span>');});
   /* END HANDLEBARS HELPER REGISTRE */
 
@@ -202,7 +247,6 @@
     });
   }
   /* End Clean Template */
-
 
   $(document).ready(function(){
     /* Form URL */
@@ -258,11 +302,18 @@
         var ArrayKeyword = Website.getKeywords();
         generateTemplate('keywords', {key: ArrayKeyword});
 
-        /* W3C */
+        /* W3C HTML */
         Website.w3c('json', function(res){
           if(res.messages[0]){
-            generateTemplate('w3c', {array_message: res.messages});
+            var l = res.messages.length;
+            generateTemplate('w3c', {array_message: res.messages, nb_errors: l});
           }
+        });
+
+        /* W3C CSS */
+        Website.w3c_css(function(res){
+          var l = res.length;
+          generateTemplate('w3ccss', {errors: res, nb_errors: l});
         });
 
       });
