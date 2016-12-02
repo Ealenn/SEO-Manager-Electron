@@ -29,6 +29,12 @@
               </div>
             </div>
           </form>
+
+          <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-success" style="width: 0%" id="ProgressBar"></div>
+          </div>
+          <center id="progressTitle"></center>
+
         </div>
       </div>
 
@@ -49,34 +55,38 @@
           <div class="panel-body">
 
               <div class="col-lg-3 col-md-3 col-xs-3 thumb">
-                Desktop (1920 x 1080)
+                Desktop
                 <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_desktopHD">
                     <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_desktopHD">
                 </a>
+                (1920 x 1080)
               </div>
               <div class="col-lg-3 col-md-3 col-xs-3 thumb">
-                Desktop (1024 x 768)
+                Desktop
                 <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_desktop">
                     <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_desktop">
                 </a>
+                (1024 x 768)
               </div>
               <div class="col-lg-3 col-md-3 col-xs-3 thumb">
-                Microsoft Surface (1366 x 768)
+                Microsoft Surface
                 <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_microsoftSurface">
                     <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_microsoftSurface">
                 </a>
+                (1366 x 768)
               </div>
               <div class="col-lg-3 col-md-3 col-xs-3 thumb">
-                iPhone 5s (1136 x 640)
+                iPhone 5s
                 <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_iphone">
                     <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_iphone">
                 </a>
+                (1136 x 640)
               </div>
 
-
-            <b>Meta Description : </b> {{description}}
+            <br />
+            <p><b>Meta Description : </b> {{description}}</p>
             <hr />
-            <b>Meta Keywords : </b> {{keywords}}
+            <p><b>Meta Keywords : </b> {{keywords}}</p>
           </div>
         </div>
       </script>
@@ -134,7 +144,7 @@
       <!-- w3c -->
       <div id="w3c"></div>
       <script id="w3c-template" type="text/x-handlebars-template">
-        <div class="panel panel-danger">
+        <div class="panel panel-{{color}}">
           <div class="panel-heading">
             <h3 class="panel-title">W3C HTML <span class="label label-default">{{nb_errors}}</span></h3>
           </div>
@@ -167,7 +177,7 @@
       <!-- w3ccss -->
       <div id="w3ccss"></div>
       <script id="w3ccss-template" type="text/x-handlebars-template">
-        <div class="panel panel-danger">
+        <div class="panel panel-{{color}}">
           <div class="panel-heading">
             <h3 class="panel-title">W3C CSS <span class="label label-default">{{nb_errors}}</span></h3>
           </div>
@@ -212,8 +222,10 @@
   <script type="text/javascript" src="res/js/handlebars-v4.0.5.js"></script>
   <script type="text/javascript" src="res/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="res/js/lightbox.min.js"></script>
+  <script type="text/javascript" src="res/js/ProgressBar.class.js"></script>
   <script>
   /* INCLUDE */
+  var PBar = new ProgressBar('ProgressBar', 'progressTitle');
   var ArrayTemplates = [];
   var Website = require('../src/Website.class.js');
 
@@ -221,13 +233,7 @@
   Handlebars.registerHelper('ifEgal', function(v1, v2, options) {if(v1 === v2) {return options.fn(this);}return options.inverse(this);});
   Handlebars.registerHelper('ifSup', function(v1, v2, options) {if(v1 >= v2) {return options.fn(this);}return options.inverse(this);});
   Handlebars.registerHelper('list', function(context, options) {var ret = "<ul>";for(var i=0, j=context.length; i<j; i++) {ret = ret + "<li>" + options.fn(context[i]) + "</li>";}return ret + "</ul>";});
-  Handlebars.registerHelper('each', function(context, options) {
-    var ret = "";
-    for(var i=0, j=context.length; i<j; i++) {
-      ret = ret + options.fn(context[i]);
-    }
-    return ret;
-  });
+  Handlebars.registerHelper('each', function(context, options) {var ret = "";for(var i=0, j=context.length; i<j; i++) {ret = ret + options.fn(context[i]);}return ret;});
   Handlebars.registerHelper('w3c_label', function(text) {text = Handlebars.escapeExpression(text);var design = 'default';switch (text) {case 'error': design = 'danger'; break;case 'info': design = 'info'; break;default: design = 'default'; break;}return new Handlebars.SafeString('<span class="label label-' + design + '">' + text + '</span>');});
   /* END HANDLEBARS HELPER REGISTRE */
 
@@ -272,6 +278,8 @@
 
         /* Info */
         Meta.AnalyseHeader(function(info){
+          PBar.startStep('AnalyseHeader');
+
           /* Template Info */
           if(info.title && info.description && info.keywords){info.infoColor = 'success';} else {info.infoColor = 'danger';}
           if(!info.title){info.title = 'ERROR MESSAGE'}
@@ -291,11 +299,14 @@
           generateTemplate('opengraph', info);
 
           /* Pictures */
+          PBar.startStep('Picture');
           Website.getPicture((obj)=>{
             $('#a_' + obj.type).attr('href', obj.addr);
             $('#img_' + obj.type).attr('src', obj.addr);
+            PBar.finishStep('Picture');
           });
 
+          PBar.finishStep('AnalyseHeader');
         });
 
         /* Keyword */
@@ -303,17 +314,21 @@
         generateTemplate('keywords', {key: ArrayKeyword});
 
         /* W3C HTML */
+        PBar.startStep('W3C');
         Website.w3c('json', function(res){
-          if(res.messages[0]){
-            var l = res.messages.length;
-            generateTemplate('w3c', {array_message: res.messages, nb_errors: l});
-          }
+          if(res.messages[0]){res.Color = 'danger';} else {res.Color = 'success';}
+          var l = res.messages.length;
+          generateTemplate('w3c', {array_message: res.messages, nb_errors: l, color:res.Color});
+          PBar.finishStep('W3C');
         });
 
         /* W3C CSS */
+        PBar.startStep('W3CCSS');
         Website.w3c_css(function(res){
+          if(res[0]){res.Color = 'danger';} else {res.Color = 'success';}
           var l = res.length;
-          generateTemplate('w3ccss', {errors: res, nb_errors: l});
+          generateTemplate('w3ccss', {errors: res, nb_errors: l, color: res.Color});
+          PBar.finishStep('W3CCSS');
         });
 
       });
