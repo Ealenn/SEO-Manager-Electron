@@ -19,6 +19,17 @@ class Website{
   }
 
   /**
+   * Page Speed Insights Report
+   * @param {Requester~requestCallback} callback function(data)
+   */
+  PageSpeedInsightsReport(callback){
+    const psi = require('psi');
+    psi(this.url).then(data => {
+      callback(data);
+    });
+  }
+
+  /**
    * @param {string} output json / html
    * @param {Requester~requestCallback} callback function(res)
    */
@@ -90,6 +101,14 @@ class Website{
         var W = new Website(body, uri);
         callback(W);
       });
+    }
+
+    /**
+     * Get URL
+     * @return {string} url website
+     */
+    getUrl(){
+      return this.url;
     }
 
     /**

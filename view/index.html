@@ -7,7 +7,8 @@
 
     <link rel="stylesheet" href="res/css/bootstrap.min.css" />
     <link rel="stylesheet" href="res/css/bootstrap-theme-dark.min.css" />
-    <link href="res/css/lightbox.min.css" rel="stylesheet">
+    <link href="res/css/lightbox.min.css" rel="stylesheet"/>
+    <link href="res/css/circle.min.css" rel="stylesheet" />
   </head>
   <body>
 
@@ -108,7 +109,59 @@
           </div>
         </div>
       </script>
-      <!-- END INFO -->
+      <!-- END opengraph -->
+
+      <!-- PageSpeedInsightsReport -->
+      <div id="pagespeedinsightsreport"></div>
+      <script id="pagespeedinsightsreport-template" type="text/x-handlebars-template">
+        <div class="panel panel-{{color}}">
+          <div class="panel-heading">
+            <h3 class="panel-title">PageSpeed Insights Report | Score : {{ score.average }} / 100</h3>
+          </div>
+          <div class="panel-body">
+
+            Speed : {{ score.speed }} / 100
+            <div class="progress">
+              <div class="progress-bar progress-bar-{{ score.speedColor }}" style="width: {{ score.speed }}%"></div>
+            </div>
+
+            Usability : {{ score.usability }} / 100
+            <div class="progress">
+              <div class="progress-bar progress-bar-{{ score.usabilityColor }}" style="width: {{ score.usability }}%"></div>
+            </div>
+
+            <br />
+
+            <table class="table table-striped">
+              <thead>
+               <tr>
+                 <th>#</th>
+                 <th>Exp</th>
+                 <th>Impact</th>
+               </tr>
+             </thead>
+             <tbody>
+              {{#each rule}}
+                {{#ifSup ruleImpact 0.01}}
+                  <tr>
+                    <td>{{localizedRuleName}}</td>
+                    <td>{{summary.format}}</td>
+                    <td>{{round ruleImpact}}</td>
+                  </tr>
+                {{/ifSup}}
+              {{/each}}
+            </tbody>
+            </table>
+
+            <hr />
+
+            <a href="https://developers.google.com/speed/pagespeed/insights/?url={{url}}" class="btn btn-default" style="width:100%">Open Google PageSpeed</a>
+            <a href="https://search.google.com/search-console/mobile-friendly?url={{url}}" class="btn btn-default" style="width:100%">Open Google MobileFriendly</a>
+
+          </div>
+        </div>
+      </script>
+      <!-- END PageSpeedInsightsReport -->
 
       <!-- KEYWORDS -->
       <div id="keywords"></div>
@@ -235,6 +288,8 @@
   Handlebars.registerHelper('list', function(context, options) {var ret = "<ul>";for(var i=0, j=context.length; i<j; i++) {ret = ret + "<li>" + options.fn(context[i]) + "</li>";}return ret + "</ul>";});
   Handlebars.registerHelper('each', function(context, options) {var ret = "";for(var i=0, j=context.length; i<j; i++) {ret = ret + options.fn(context[i]);}return ret;});
   Handlebars.registerHelper('w3c_label', function(text) {text = Handlebars.escapeExpression(text);var design = 'default';switch (text) {case 'error': design = 'danger'; break;case 'info': design = 'info'; break;default: design = 'default'; break;}return new Handlebars.SafeString('<span class="label label-' + design + '">' + text + '</span>');});
+  Handlebars.registerHelper("log", function(something) {console.log(something);});
+  Handlebars.registerHelper('round', function(number) {return Math.round(number+1);});
   /* END HANDLEBARS HELPER REGISTRE */
 
   /* Template */
@@ -253,6 +308,14 @@
     });
   }
   /* End Clean Template */
+
+  /* A HREF */
+  var shell = require('electron').shell;
+  $(document).on('click', 'a[href^="http"]', function(event) {
+      event.preventDefault();
+      shell.openExternal(this.href);
+  });
+  /* A HREF */
 
   $(document).ready(function(){
     /* Form URL */
@@ -282,15 +345,15 @@
 
           /* Template Info */
           if(info.title && info.description && info.keywords){info.infoColor = 'success';} else {info.infoColor = 'danger';}
-          if(!info.title){info.title = 'ERROR MESSAGE'}
-          if(!info.description){info.description = 'ERROR MESSAGE'}
-          if(!info.keywords){info.keywords = 'ERROR MESSAGE'}
+          if(!info.title){info.title = 'Empty'}
+          if(!info.description){info.description = 'Empty'}
+          if(!info.keywords){info.keywords = 'Empty'}
 
           /* Template OpenGraph */
           if(info.openGraph[0]){info.openGraphColor = 'success';} else {
             info.openGraphColor = 'danger';
             info.openGraph[0] = {
-              name: 'ERROR MESSAGE',
+              name: 'Empty',
               content: '<a href="http://ogp.me/">http://ogp.me/</a>'
             }
           }
@@ -307,6 +370,45 @@
           });
 
           PBar.finishStep('AnalyseHeader');
+        });
+
+        /* PageSpeed Insights Report */
+        PBar.startStep('Page Speed Insights Report');
+        Website.PageSpeedInsightsReport((data)=>{
+
+          /* Color */
+          var getColor = (score)=>{
+            var color = 'default';
+            if(score < 40){
+              color = 'danger';
+            } else if(score >= 40 && score <= 60){
+              color = 'warning';
+            } else {
+              color = 'success';
+            }
+
+            return color;
+          }
+
+          /* Score */
+          var score = {};
+          score.speed = data.ruleGroups.SPEED.score;
+          score.speedColor = getColor(score.speed);
+
+          score.usability = data.ruleGroups.USABILITY.score;
+          score.usabilityColor = getColor(score.usability);
+
+          score.average = Math.round((score.speed + score.usability) / 2);
+
+          /* Rule */
+          var rule = [];
+          $.each(data.formattedResults.ruleResults, function( index, value ){
+            rule.push(value);
+          });
+
+          /* Template */
+          generateTemplate('pagespeedinsightsreport', {data: data, rule: rule, url: Website.getUrl(), score: score, color: getColor(score.average)});
+          PBar.finishStep('Page Speed Insights Report');
         });
 
         /* Keyword */
