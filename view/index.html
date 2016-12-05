@@ -23,7 +23,7 @@
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon">URL : </span>
-                <input type="text" name="url" class="form-control">
+                <input type="text" name="url" class="form-control" placeholder="http://xx.xx/">
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="submit">OK</button>
                 </span>
@@ -56,40 +56,29 @@
           <div class="panel-body">
 
               <div class="col-lg-3 col-md-3 col-xs-3 thumb">
-                Desktop
                 <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_desktopHD">
                     <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_desktopHD">
                 </a>
-                (1920 x 1080)
-              </div>
-              <div class="col-lg-3 col-md-3 col-xs-3 thumb">
-                Desktop
-                <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_desktop">
-                    <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_desktop">
-                </a>
-                (1024 x 768)
-              </div>
-              <div class="col-lg-3 col-md-3 col-xs-3 thumb">
-                Microsoft Surface
-                <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_microsoftSurface">
-                    <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_microsoftSurface">
-                </a>
-                (1366 x 768)
-              </div>
-              <div class="col-lg-3 col-md-3 col-xs-3 thumb">
-                iPhone 5s
-                <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_iphone">
-                    <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_iphone">
-                </a>
-                (1136 x 640)
               </div>
 
-            <br />
-            <p><b>Meta Description : </b> {{description}}</p>
-            <hr />
-            <p><b>Meta Keywords : </b> {{keywords}}</p>
+              <div class="col-lg-9 col-md-9 col-xs-9 thumb">
+                <div id="wappalyzer"></div>
+              </div>
+
+              <div class="col-lg-12 col-md-12 col-xs-12 thumb">
+                <p><b>Meta Description : </b> {{description}}</p>
+                <hr />
+                <p><b>Meta Keywords : </b> {{keywords}}</p>
+              </div>
+
           </div>
         </div>
+      </script>
+
+      <script id="wappalyzer-template" type="text/x-handlebars-template">
+        {{#each wapp}}
+        <li><b>{{app}} </b><i>{{version}}</i> : {{confidenceTotal}}%</li>
+        {{/each}}
       </script>
       <!-- END INFO -->
 
@@ -309,15 +298,15 @@
   }
   /* End Clean Template */
 
-  /* A HREF */
-  var shell = require('electron').shell;
-  $(document).on('click', 'a[href^="http"]', function(event) {
-      event.preventDefault();
-      shell.openExternal(this.href);
-  });
-  /* A HREF */
-
   $(document).ready(function(){
+    /* A HREF */
+    var shell = require('electron').shell;
+    $(document).on('click', 'a[href^="http"]', function(event) {
+        event.preventDefault();
+        shell.openExternal(this.href);
+    });
+    /* A HREF */
+
     /* Form URL */
     $('#form_url').submit(function(event) {
         event.preventDefault();
@@ -368,6 +357,19 @@
             $('#img_' + obj.type).attr('src', obj.addr);
             PBar.finishStep('Picture');
           });
+
+          /* Wappalyzer */
+          //PBar.startStep('wappalyzer');
+          Website.wappalyzer((response)=>{
+            var wapp = [];
+
+            $.each(response, function( index, value ){
+              wapp.push(value);
+            });
+
+            generateTemplate('wappalyzer', {wapp:wapp});
+            //PBar.finishStep('wappalyzer');
+          }, Website.getUrl());
 
           PBar.finishStep('AnalyseHeader');
         });

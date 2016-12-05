@@ -62,6 +62,25 @@ class Website{
     });
   }
 
+  /**
+   * @param {Requester~requestCallback} callback function(err,apps,appInfo)
+   */
+  wappalyzer(callback){
+    var wappalyzer = require("wappalyzer");
+
+
+    var options={
+      url : this.url,
+      //hostname:"codelanka.github.io",
+      debug:false
+    }
+
+    wappalyzer.detectFromUrl(options,function  (err,apps,appInfo) {
+      console.log(appInfo);
+      callback(appInfo);
+    })
+  }
+
   /** PICTURES
    * @param {string} URL URL to generate PICTURES
    * @param {Requester~requestCallback} callback function(obj) obj = {type, addr} | type : desktopHD, desktop, microsoftSurface, iphone
@@ -78,9 +97,9 @@ class Website{
     }
 
     screenshot(this.url, 'desktopHD', '1920x1080', callback);
-    screenshot(this.url, 'desktop', '1024x768', callback);
-    screenshot(this.url, 'microsoftSurface', '1366x768', callback);
-    screenshot(this.url, 'iphone', 'iphone 5s', callback);
+    //screenshot(this.url, 'desktop', '1024x768', callback);
+    //screenshot(this.url, 'microsoftSurface', '1366x768', callback);
+    //screenshot(this.url, 'iphone', 'iphone 5s', callback);
   }
 
   /** GET WEBSITE FROM URL
