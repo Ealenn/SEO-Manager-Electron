@@ -34,17 +34,11 @@
           <div class="progress progress-striped active">
             <div class="progress-bar progress-bar-success" style="width: 0%" id="ProgressBar"></div>
           </div>
-          <center id="progressTitle"></center>
+
+          <p id="progressTitle"></p>
 
         </div>
       </div>
-
-      <!-- PICTURE
-      <div class="row">
-        <div class="col-md-6"><img class="img-responsive img-thumbnail center-block" src="res/img/placeholder.png" id="picture_desktop"></div>
-        <div class="col-md-6"><img class="img-responsive img-thumbnail center-block" src="res/img/placeholder.png" id="picture_iphone"></div>
-      </div>
-       END PICTURE -->
 
       <!-- INFO -->
       <div id="info"></div>
@@ -295,6 +289,8 @@
     ArrayTemplates.forEach(function(element) {
       $("#" + element).html(' ');
     });
+    $('#ProgressBar').attr('style','width: 0%');
+    $('#progressTitle').html('');
   }
   /* End Clean Template */
 
@@ -359,7 +355,7 @@
           });
 
           /* Wappalyzer */
-          //PBar.startStep('wappalyzer');
+          PBar.startStep('wappalyzer');
           Website.wappalyzer((response)=>{
             var wapp = [];
 
@@ -368,7 +364,7 @@
             });
 
             generateTemplate('wappalyzer', {wapp:wapp});
-            //PBar.finishStep('wappalyzer');
+            PBar.finishStep('wappalyzer');
           }, Website.getUrl());
 
           PBar.finishStep('AnalyseHeader');
