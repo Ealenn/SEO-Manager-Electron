@@ -7,6 +7,7 @@
 * Keyword list
 * Metadata
 * HTML JS CSS Analyse
+* SpeedTest
 * Code Quality
 * Duplicate content
 * Indexation
@@ -36,3 +37,6 @@ Build
 ```bash
 npm run build
 ```
+
+## Screen
+![screen](https://raw.githubusercontent.com/Ealenn/SEO-Manager-Electron/master/view/res/img/screenshot.png)
