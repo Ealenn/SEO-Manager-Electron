@@ -5,13 +5,15 @@
 > SEO Manager Generates a SEO Report Easily
 
 * Keyword list
-* Metadata
+* Open Graph, Twitter Card, and oEmbed Metadata
 * HTML JS CSS Analyse
-* SpeedTest
+* PageSpeed Insights
+* W3C (HTML / CSS)
 * Code Quality
 * Duplicate content
 * Indexation
-* Social Share (OpenGraph / Twitter Cards)
+* Bing - Webmaster Tools
+* Google Search Console
 * And more !
 
 ## Docs

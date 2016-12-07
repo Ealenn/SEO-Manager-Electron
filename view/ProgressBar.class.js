@@ -1,3 +1,4 @@
+/** ProgressBar */
 class ProgressBar {
   constructor(idBar, idText) {
     this.id = idBar;
@@ -6,6 +7,7 @@ class ProgressBar {
   }
 
   changeState(){
+    var titleCase = require('title-case');
     var html = '';
     var total = 0;
     var nbFinish = 0;
@@ -19,8 +21,7 @@ class ProgressBar {
         img = 'check.png';
       }
 
-      /* HTML */
-      html += '<li>' + index + ' <img src="res/img/'+img+'" height="24" width="24">' + '</li>';
+      html += '<li>' + titleCase(index) + ' <img src="res/img/' + img + '" height="24" width="24">' + '</li>';
     });
     html += '</ul>';
 
@@ -29,13 +30,31 @@ class ProgressBar {
     $('#' + this.text).html(html);
   }
 
+  /**
+   * Start Step
+   * @param {string} stepName Name of step
+   */
   startStep(stepName){
     this.Step[stepName] = 1;
     this.changeState();
   }
 
+  /**
+   * Stop Step
+   * @param {string} stepName Name of step
+   */
   finishStep(stepName){
     this.Step[stepName] = 0;
     this.changeState();
   }
+
+  /**
+   * Clean all step
+   */
+  clean(){
+    $('#ProgressBar').attr('style','width: 0%');
+    $('#progressTitle').html('');
+  }
 }
+
+module.exports = ProgressBar;

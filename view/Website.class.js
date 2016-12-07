@@ -9,6 +9,18 @@ class Website{
     this.url = uri;
   }
 
+  /**
+   * Page Speed Insights Report
+   * @param {Requester~requestCallback} callback function(data)
+   */
+  metaphor(callback){
+    const Metaphor = require('Metaphor');
+    const engine = new Metaphor.Engine();
+    engine.describe(this.url, (description) => {
+      callback(description);
+    });
+  }
+
   /** KEYWORDS
    * @return {array} JSon https://www.npmjs.com/package/density =
    * [{"word": "world","count": 1},{"word": "hello","count": 2}]
@@ -68,15 +80,12 @@ class Website{
   wappalyzer(callback){
     var wappalyzer = require("wappalyzer");
 
-
     var options={
       url : this.url,
-      //hostname:"codelanka.github.io",
       debug:false
     }
 
     wappalyzer.detectFromUrl(options,function  (err,apps,appInfo) {
-      console.log(appInfo);
       callback(appInfo);
     })
   }
@@ -97,9 +106,6 @@ class Website{
     }
 
     screenshot(this.url, 'desktopHD', '1920x1080', callback);
-    //screenshot(this.url, 'desktop', '1024x768', callback);
-    //screenshot(this.url, 'microsoftSurface', '1366x768', callback);
-    //screenshot(this.url, 'iphone', 'iphone 5s', callback);
   }
 
   /** GET WEBSITE FROM URL
@@ -120,30 +126,6 @@ class Website{
         var W = new Website(body, uri);
         callback(W);
       });
-    }
-
-    /**
-     * Get URL
-     * @return {string} url website
-     */
-    getUrl(){
-      return this.url;
-    }
-
-    /**
-     * @return {Meta} obj Return obj Meta
-     */
-    getMeta(){
-      var Meta = require('./Meta.class.js');
-      return new Meta(this.html);
-    }
-
-    /**
-     * @return {Body} obj Return obj Body
-     */
-    getBody(){
-      var Body = require('./Body.class.js');
-      return new Body(this.html);
     }
 }
 

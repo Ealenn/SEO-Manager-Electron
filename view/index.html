@@ -3,12 +3,34 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title></title>
+    <title>SEO Manager</title>
 
+    <link rel="icon" href="res/img/app.ico" />
     <link rel="stylesheet" href="res/css/bootstrap.min.css" />
     <link rel="stylesheet" href="res/css/bootstrap-theme-dark.min.css" />
     <link href="res/css/lightbox.min.css" rel="stylesheet"/>
     <link href="res/css/circle.min.css" rel="stylesheet" />
+    <style>
+    .metaphor-embed-header-icon{
+      height: 25px;
+      width: 25px;
+      float: left;
+      margin-right: 5px;
+    }
+    .metaphor-embed-header-link{
+      float: left;
+    }
+    .metaphor-embed-body-image{
+      height: 200px;
+      width: 200px;
+      text-align: center;
+      float: left;
+      margin-left: 40%;
+    }
+    .metaphor-embed-body-description{
+      float:left;
+    }
+    </style>
   </head>
   <body>
 
@@ -41,28 +63,26 @@
       </div>
 
       <!-- INFO -->
-      <div id="info"></div>
-      <script id="info-template" type="text/x-handlebars-template">
+      <div id="metadata"></div>
+      <script id="metadata-template" type="text/x-handlebars-template">
         <div class="panel panel-{{infoColor}}">
           <div class="panel-heading">
             <h3 class="panel-title">{{title}}</h3>
           </div>
           <div class="panel-body">
 
-              <div class="col-lg-3 col-md-3 col-xs-3 thumb">
+              <div class="col-lg-6 col-md-6 col-xs-6 thumb">
                 <a href="res/img/placeholder.png" data-lightbox="screenshot" class="thumbnail" id="a_desktopHD">
-                    <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 200px;" id="img_desktopHD">
+                    <img class="img-responsive" src="res/img/placeholder.png" alt="" style="height: 250px;width:250px" id="img_desktopHD">
                 </a>
               </div>
 
-              <div class="col-lg-9 col-md-9 col-xs-9 thumb">
+              <div class="col-lg-6 col-md-6 col-xs-6 thumb">
                 <div id="wappalyzer"></div>
               </div>
 
               <div class="col-lg-12 col-md-12 col-xs-12 thumb">
                 <p><b>Meta Description : </b> {{description}}</p>
-                <hr />
-                <p><b>Meta Keywords : </b> {{keywords}}</p>
               </div>
 
           </div>
@@ -81,22 +101,18 @@
       <script id="opengraph-template" type="text/x-handlebars-template">
         <div class="panel panel-{{openGraphColor}}">
           <div class="panel-heading">
-            <h3 class="panel-title">OpenGraph</h3>
+            <h3 class="panel-title">OpenGraph Type : {{type}}</h3>
           </div>
           <div class="panel-body">
-            <ul>
-              {{#each openGraph}}
-              <li><b>{{name}} </b>: {{{content}}}</li>
-              {{/each}}
-            </ul>
+            {{{preview}}}
           </div>
         </div>
       </script>
       <!-- END opengraph -->
 
       <!-- PageSpeedInsightsReport -->
-      <div id="pagespeedinsightsreport"></div>
-      <script id="pagespeedinsightsreport-template" type="text/x-handlebars-template">
+      <div id="page-speed-insights-report"></div>
+      <script id="page-speed-insights-report-template" type="text/x-handlebars-template">
         <div class="panel panel-{{color}}">
           <div class="panel-heading">
             <h3 class="panel-title">PageSpeed Insights Report | Score : {{ score.average }} / 100</h3>
@@ -256,15 +272,10 @@
   <script type="text/javascript" src="res/js/jquery2.1.1.min.js"></script>
   <script type="text/javascript" src="res/js/jquery.min.js"></script>
   <script type="text/javascript" src="res/js/handlebars-v4.0.5.js"></script>
+  <script type="text/javascript" src="res/js/underscore-min.js"></script>
   <script type="text/javascript" src="res/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="res/js/lightbox.min.js"></script>
-  <script type="text/javascript" src="res/js/ProgressBar.class.js"></script>
   <script>
-  /* INCLUDE */
-  var PBar = new ProgressBar('ProgressBar', 'progressTitle');
-  var ArrayTemplates = [];
-  var Website = require('../src/Website.class.js');
-
   /* HANDLEBARS HELPER REGISTRE */
   Handlebars.registerHelper('ifEgal', function(v1, v2, options) {if(v1 === v2) {return options.fn(this);}return options.inverse(this);});
   Handlebars.registerHelper('ifSup', function(v1, v2, options) {if(v1 >= v2) {return options.fn(this);}return options.inverse(this);});
@@ -274,167 +285,7 @@
   Handlebars.registerHelper("log", function(something) {console.log(something);});
   Handlebars.registerHelper('round', function(number) {return Math.round(number+1);});
   /* END HANDLEBARS HELPER REGISTRE */
-
-  /* Template */
-  var generateTemplate = function(name, data){
-    ArrayTemplates.push(name);
-    var template = Handlebars.compile($("#" + name + "-template").html());
-    var html = template(data);
-    $('#' + name).html(html);
-  }
-  /* End Template */
-
-  /* Clean Template */
-  var clean = function(){
-    ArrayTemplates.forEach(function(element) {
-      $("#" + element).html(' ');
-    });
-    $('#ProgressBar').attr('style','width: 0%');
-    $('#progressTitle').html('');
-  }
-  /* End Clean Template */
-
-  $(document).ready(function(){
-    /* A HREF */
-    var shell = require('electron').shell;
-    $(document).on('click', 'a[href^="http"]', function(event) {
-        event.preventDefault();
-        shell.openExternal(this.href);
-    });
-    /* A HREF */
-
-    /* Form URL */
-    $('#form_url').submit(function(event) {
-        event.preventDefault();
-        clean();
-        var $inputs = $('#form_url :input');
-        var values = {};
-
-        $inputs.each(function() {
-            values[this.name] = $(this).val();
-        });
-
-        Analyse(values['url']);
-    });
-    /* End Form URL */
-
-    /* Website */
-    var Analyse = function(url){
-      var myWebsite = Website.FromUrl(url, (Website) =>{
-        var Body = Website.getBody();
-        var Meta = Website.getMeta();
-
-        /* Info */
-        Meta.AnalyseHeader(function(info){
-          PBar.startStep('AnalyseHeader');
-
-          /* Template Info */
-          if(info.title && info.description && info.keywords){info.infoColor = 'success';} else {info.infoColor = 'danger';}
-          if(!info.title){info.title = 'Empty'}
-          if(!info.description){info.description = 'Empty'}
-          if(!info.keywords){info.keywords = 'Empty'}
-
-          /* Template OpenGraph */
-          if(info.openGraph[0]){info.openGraphColor = 'success';} else {
-            info.openGraphColor = 'danger';
-            info.openGraph[0] = {
-              name: 'Empty',
-              content: '<a href="http://ogp.me/">http://ogp.me/</a>'
-            }
-          }
-
-          generateTemplate('info', info);
-          generateTemplate('opengraph', info);
-
-          /* Pictures */
-          PBar.startStep('Picture');
-          Website.getPicture((obj)=>{
-            $('#a_' + obj.type).attr('href', obj.addr);
-            $('#img_' + obj.type).attr('src', obj.addr);
-            PBar.finishStep('Picture');
-          });
-
-          /* Wappalyzer */
-          PBar.startStep('wappalyzer');
-          Website.wappalyzer((response)=>{
-            var wapp = [];
-
-            $.each(response, function( index, value ){
-              wapp.push(value);
-            });
-
-            generateTemplate('wappalyzer', {wapp:wapp});
-            PBar.finishStep('wappalyzer');
-          }, Website.getUrl());
-
-          PBar.finishStep('AnalyseHeader');
-        });
-
-        /* PageSpeed Insights Report */
-        PBar.startStep('Page Speed Insights Report');
-        Website.PageSpeedInsightsReport((data)=>{
-
-          /* Color */
-          var getColor = (score)=>{
-            var color = 'default';
-            if(score < 40){
-              color = 'danger';
-            } else if(score >= 40 && score <= 60){
-              color = 'warning';
-            } else {
-              color = 'success';
-            }
-
-            return color;
-          }
-
-          /* Score */
-          var score = {};
-          score.speed = data.ruleGroups.SPEED.score;
-          score.speedColor = getColor(score.speed);
-
-          score.usability = data.ruleGroups.USABILITY.score;
-          score.usabilityColor = getColor(score.usability);
-
-          score.average = Math.round((score.speed + score.usability) / 2);
-
-          /* Rule */
-          var rule = [];
-          $.each(data.formattedResults.ruleResults, function( index, value ){
-            rule.push(value);
-          });
-
-          /* Template */
-          generateTemplate('pagespeedinsightsreport', {data: data, rule: rule, url: Website.getUrl(), score: score, color: getColor(score.average)});
-          PBar.finishStep('Page Speed Insights Report');
-        });
-
-        /* Keyword */
-        var ArrayKeyword = Website.getKeywords();
-        generateTemplate('keywords', {key: ArrayKeyword});
-
-        /* W3C HTML */
-        PBar.startStep('W3C');
-        Website.w3c('json', function(res){
-          if(res.messages[0]){res.Color = 'danger';} else {res.Color = 'success';}
-          var l = res.messages.length;
-          generateTemplate('w3c', {array_message: res.messages, nb_errors: l, color:res.Color});
-          PBar.finishStep('W3C');
-        });
-
-        /* W3C CSS */
-        PBar.startStep('W3CCSS');
-        Website.w3c_css(function(res){
-          if(res[0]){res.Color = 'danger';} else {res.Color = 'success';}
-          var l = res.length;
-          generateTemplate('w3ccss', {errors: res, nb_errors: l, color: res.Color});
-          PBar.finishStep('W3CCSS');
-        });
-
-      });
-    }
-
-  });
   </script>
+  <script type="text/javascript" src="app.js"></script>
   </body>
 </html>

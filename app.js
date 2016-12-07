@@ -2,7 +2,6 @@ const electron = require('electron');
 const {app} = electron;
 const {BrowserWindow} = electron;
 
-require('electron-debug')({showDevTools: true, enabled: true});
 
 let win;
 
