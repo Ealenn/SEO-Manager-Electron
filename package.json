@@ -24,6 +24,7 @@
     "electron": "^1.4.10",
     "electron-packager": "^8.3.0",
     "electron-prebuilt": "^1.4.10",
+    "google-tools": "0.0.2",
     "jsdom": "^9.8.3",
     "metaphor": "^3.8.2",
     "pageres": "^4.2.0",

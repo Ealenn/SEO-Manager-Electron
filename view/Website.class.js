@@ -42,6 +42,21 @@ class Website{
   }
 
   /**
+   * Google Search
+   * @param {Requester~requestCallback} callback function(data)
+   */
+  googleSearch(callback){
+    var google = require('google-tools');
+
+    google.search({
+        q: 'site:' + this.url.replace('http://', '').replace('https://', '').replace('www.', '').split('/')[0],
+        num: 100
+    }, function(err, r) {
+        callback(r);
+    });
+  }
+
+  /**
    * @param {string} output json / html
    * @param {Requester~requestCallback} callback function(res)
    */

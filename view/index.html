@@ -78,6 +78,7 @@
               </div>
 
               <div class="col-lg-6 col-md-6 col-xs-6 thumb">
+                <h4>{{site_name}} :</h4>
                 <div id="wappalyzer"></div>
               </div>
 
@@ -91,7 +92,7 @@
 
       <script id="wappalyzer-template" type="text/x-handlebars-template">
         {{#each wapp}}
-        <li><b>{{app}} </b><i>{{version}}</i> : {{confidenceTotal}}%</li>
+          <li><b>{{app}} </b><i>{{version}}</i> : {{confidenceTotal}}%</li>
         {{/each}}
       </script>
       <!-- END INFO -->
@@ -192,6 +193,35 @@
         </div>
       </script>
       <!-- END KEYWORDS -->
+
+      <!-- Google -->
+      <div id="google"></div>
+      <script id="google-template" type="text/x-handlebars-template">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Google : {{nResults}}</h3>
+          </div>
+          <div class="panel-body">
+            <table class="table table-striped">
+              <thead>
+               <tr>
+                 <th>Title</th>
+                 <th>Link</th>
+               </tr>
+             </thead>
+             <tbody>
+              {{#each results}}
+                <tr>
+                  <td>{{this.title}}</td>
+                  <td>{{this.link}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+            </table>
+          </div>
+        </div>
+      </script>
+      <!-- END Google -->
 
       <!-- w3c -->
       <div id="w3c"></div>

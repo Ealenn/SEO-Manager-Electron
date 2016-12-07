@@ -94,6 +94,13 @@ $(document).ready(function(){
         T.finishTask('keywords', {key: ArrayKeyword});
       })
 
+      /* Google Search */
+      T.addTask('google', ()=>{
+        Website.googleSearch((data)=>{
+          T.finishTask('google', data);
+        });
+      })
+
       // W3C
       T.addTask('w3c', ()=>{
         Website.w3c('json', function(res){
