@@ -175,17 +175,13 @@
               <thead>
                <tr>
                  <th>Word</th>
-                 <th>Repeat</th>
                </tr>
              </thead>
              <tbody>
-              {{#each key}}
-                {{#ifSup this.count 5}}
+              {{#each keyword}}
                 <tr>
-                  <td>{{this.word}}</td>
-                  <td>{{this.count}}</td>
+                  <td>{{this}}</td>
                 </tr>
-                {{/ifSup}}
               {{/each}}
             </tbody>
             </table>

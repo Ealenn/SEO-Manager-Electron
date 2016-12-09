@@ -22,12 +22,14 @@ class Website{
   }
 
   /** KEYWORDS
-   * @return {array} JSon https://www.npmjs.com/package/density =
-   * [{"word": "world","count": 1},{"word": "hello","count": 2}]
+   * @return {array} JSon
+   * @param {Requester~requestCallback} callback function(data)
    */
-  getKeywords(){
-    var density = require('density');
-    return density(this.html).getDensity();
+  getKeywords(callback){
+    var Topick = require('topick');
+    Topick.getKeywords(this.url, {maxNumberOfKeywords:50, minKeywordLength: 4, ngram: { min_count: 5, max_size: 3 }}).then((keywords) => {
+      callback(keywords);
+    })
   }
 
   /**

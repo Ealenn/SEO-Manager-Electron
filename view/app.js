@@ -90,8 +90,9 @@ $(document).ready(function(){
 
       /* Keyword */
       T.addTask('keywords', ()=>{
-        var ArrayKeyword = Website.getKeywords();
-        T.finishTask('keywords', {key: ArrayKeyword});
+        var ArrayKeyword = Website.getKeywords((data)=>{
+          T.finishTask('keywords', {keyword : data});
+        });
       })
 
       /* Google Search */
