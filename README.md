@@ -1,4 +1,5 @@
 # SEO Manager
+[![GitHub release](https://img.shields.io/github/release/ealenn/SEO-Manager-Electron.svg)](https://github.com/Ealenn/SEO-Manager-Electron/releases/latest) [![GitHub issues](https://img.shields.io/github/issues/Ealenn/SEO-Manager-Electron.svg)](https://github.com/Ealenn/SEO-Manager-Electron/issues) [![GitHub stars](https://img.shields.io/github/stars/Ealenn/SEO-Manager-Electron.svg?style=social&label=Star)](https://github.com/Ealenn/SEO-Manager-Electron)
 
 ## Introduction
 
@@ -16,6 +17,8 @@
 * Google Search Console
 * And more !
 
+[Download the latest version for Windows Mac or Linux](https://github.com/Ealenn/SEO-Manager-Electron/releases/latest)
+
 ## Docs
 
 For read documentation :
@@ -23,7 +26,11 @@ For read documentation :
 npm run generate-docs
 ```
 
-## Installation
+## Installation (Release)
+
+[Download the latest version for Windows Mac or Linux](https://github.com/Ealenn/SEO-Manager-Electron/releases/latest)
+
+## Installation (Fork / Clone)
 
 Download and install all dependencies
 ```bash
