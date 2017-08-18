@@ -6,17 +6,17 @@
 > SEO Manager Generates a SEO Report Easily
 
 ## Features
-
-[ ] Keyword list
-[ ] Open Graph, Twitter Card, and oEmbed Metadata
-[ ] HTML JS CSS Analyse
-[ ] PageSpeed Insights
-[ ] W3C (HTML / CSS)
-[ ] Code Quality
-[ ] Duplicate content
-[ ] Indexation
-[ ] Bing - Webmaster Tools
-[ ] Google Search Console
+- [x] Crawl
+- [ ] Keyword list
+- [ ] Open Graph, Twitter Card, and oEmbed Metadata
+- [ ] HTML JS CSS Analyse
+- [ ] PageSpeed Insights
+- [ ] W3C (HTML / CSS)
+- [ ] Code Quality
+- [ ] Duplicate content
+- [ ] Indexation
+- [ ] Bing - Webmaster Tools
+- [ ] Google Search Console
 
 ## Language
 - [x] English
