@@ -5,47 +5,37 @@
 
 > SEO Manager Generates a SEO Report Easily
 
-* Keyword list
-* Open Graph, Twitter Card, and oEmbed Metadata
-* HTML JS CSS Analyse
-* PageSpeed Insights
-* W3C (HTML / CSS)
-* Code Quality
-* Duplicate content
-* Indexation
-* Bing - Webmaster Tools
-* Google Search Console
-* And more !
+## Features
 
-[Download the latest version for Windows Mac or Linux](https://github.com/Ealenn/SEO-Manager-Electron/releases/latest)
+[ ] Keyword list
+[ ] Open Graph, Twitter Card, and oEmbed Metadata
+[ ] HTML JS CSS Analyse
+[ ] PageSpeed Insights
+[ ] W3C (HTML / CSS)
+[ ] Code Quality
+[ ] Duplicate content
+[ ] Indexation
+[ ] Bing - Webmaster Tools
+[ ] Google Search Console
 
-## Docs
-
-For read documentation :
-```bash
-npm run generate-docs
-```
-
-## Installation (Release)
-
-[Download the latest version for Windows Mac or Linux](https://github.com/Ealenn/SEO-Manager-Electron/releases/latest)
+## Language
+- [x] English
+- [x] Français
 
 ## Installation (Fork / Clone)
 
 Download and install all dependencies
 ```bash
 npm install
+yarn install
 ```
 
-Run
+Start dev with hot reload
 ```bash
-npm run start
+npm run dev
 ```
 
-Build
+Build for production (Electron)
 ```bash
 npm run build
 ```
-
-## Screen
-![screen](https://raw.githubusercontent.com/Ealenn/SEO-Manager-Electron/master/view/res/img/screenshot.png)
