@@ -7,8 +7,8 @@
 
 ## Features
 - [x] Crawl
-- [ ] Keyword list
-- [ ] Open Graph, Twitter Card, and oEmbed Metadata
+- [x] Keyword list
+- [x] Open Graph, Twitter Card, and oEmbed Metadata
 - [ ] HTML JS CSS Analyse
 - [ ] PageSpeed Insights
 - [ ] W3C (HTML / CSS)

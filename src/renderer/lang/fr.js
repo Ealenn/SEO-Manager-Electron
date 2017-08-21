@@ -9,6 +9,11 @@ export default {
   'website.form.input': 'http://',
   'website.form.button': 'Analyser',
   'website.form.error.content': 'Veuillez saisir une URL valide',
+  // Metadata
+  'metadata.array.title': 'Métadonnée',
+  'metadata.array.name': 'Nom',
+  'metadata.array.property': 'Propriété',
+  'metadata.array.content': 'Contenu',
   // Keywords
   'keywords.panel.title': 'Keywords',
   'keywords.array.word': 'Mot',

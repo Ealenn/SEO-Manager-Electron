@@ -9,6 +9,11 @@ export default {
   'website.form.input': 'http://',
   'website.form.button': 'Analyze',
   'website.form.error.content': 'Please enter a valid URL',
+  // Metadata
+  'metadata.array.title': 'Metadata',
+  'metadata.array.name': 'Name',
+  'metadata.array.property': 'Property',
+  'metadata.array.content': 'Content',
   // Keywords
   'keywords.panel.title': 'Keywords',
   'keywords.array.word': 'Word',

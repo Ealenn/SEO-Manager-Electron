@@ -1,7 +1,7 @@
 const state = {
   title: '',
   text: '',
-  show: true
+  show: false
 }
 
 const mutations = {
