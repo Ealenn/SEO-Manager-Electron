@@ -1,6 +1,9 @@
 export default {
   // Loading
   'loading.default.text': 'Loading',
+  // Error
+  'error.default.title': 'Oops...',
+  'error.default.close': 'Close',
   // Website
   'website.form.input.label': 'URL of the website to be analyzed',
   'website.form.input': 'http://',

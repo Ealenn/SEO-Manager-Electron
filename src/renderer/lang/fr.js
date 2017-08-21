@@ -1,6 +1,9 @@
 export default {
   // Loading
   'loading.default.text': 'Chargement',
+  // Error
+  'error.default.title': 'Oups...',
+  'error.default.close': 'Fermer',
   // Website
   'website.form.input.label': 'Adresse URL du site web à analyser',
   'website.form.input': 'http://',

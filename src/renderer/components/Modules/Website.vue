@@ -20,7 +20,7 @@
 
 <script>
   import isUrl from 'validator/lib/isUrl'
-  const aimer = require('aimer')
+  const recrawler = require('recrawler')
 
   export default {
     data () {
@@ -49,10 +49,21 @@
           })
 
           this.$store.commit('UPDATE_WEBSITE', this.url)
-          aimer(this.url).then($ => {
+
+          recrawler(this.url).then($ => {
             this.$store.commit('UPDATE_QUERY', $)
             this.$store.commit('UPDATE_LOADING', {
               show: false
+            })
+          }).catch(err => {
+            console.log(err)
+            this.$store.commit('UPDATE_LOADING', {
+              show: false
+            })
+            this.$store.commit('UPDATE_ERROR', {
+              show: true,
+              title: err.message,
+              text: err.code
             })
           })
         } else {
