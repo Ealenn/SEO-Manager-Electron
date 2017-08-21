@@ -4,6 +4,12 @@ export default {
   // Error
   'error.default.title': 'Oops...',
   'error.default.close': 'Close',
+  // Configuration
+  'config.panel.title': 'Settings',
+  'config.panel.back': 'Back',
+  'config.pagespeed.title': 'Google PageSpeed Insights',
+  'config.pagespeed.label': 'API Key :',
+  'config.pagespeed.desc': 'Get a free API key for Google PageSpeed',
   // Website
   'website.form.input.label': 'URL of the website to be analyzed',
   'website.form.input': 'http://',

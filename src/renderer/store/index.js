@@ -6,6 +6,9 @@ import moment from 'moment'
 
 import modules from './modules'
 
+const ElectronStore = require('electron-store')
+const instanceOfElectronStore = new ElectronStore()
+
 Vue.use(Vuex)
 
 // Local
@@ -18,7 +21,8 @@ Config.localAvailable.forEach(function (Local) {
 
 // State
 const state = {
-  local: StoreLocal
+  local: StoreLocal,
+  electronStore: instanceOfElectronStore
 }
 
 // Mutation

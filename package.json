@@ -55,6 +55,8 @@
   "dependencies": {
     "axios": "^0.16.1",
     "deepmerge": "^0.2.10",
+    "electron-store": "^1.2.0",
+    "gpagespeed": "^4.0.5",
     "htmlparser2": "^3.8.3",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",

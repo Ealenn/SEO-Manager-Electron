@@ -1,19 +1,22 @@
 <template>
   <div class="ui">
 
+    <div class="ui error message" v-if="error">
+      <i v-on:click="error = false" class="close icon"></i>
+      <div class="header">{{ $t('website.form.error.content') }}</div>
+    </div>
+
     <div class="ui form">
       <div class="field">
         <label>{{ $t('website.form.input.label') }} :</label>
         <input v-model="url" class="prompt" type="url" :placeholder="$t('website.form.input')" autocomplete="off">
       </div>
       <div class="field centered">
+        <router-link to="/config">
+          <button class="ui icon button"><i class="setting icon"></i></button>
+        </router-link>
         <button v-on:click="update()" class="ui right labeled icon button"><i class="right arrow icon"></i> {{ $t('website.form.button') }} </button>
       </div>
-    </div>
-    
-    <div class="ui error message" v-if="error">
-      <i v-on:click="error = false" class="close icon"></i>
-      <div class="header">{{ $t('website.form.error.content') }}</div>
     </div>
   </div>
 </template>

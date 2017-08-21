@@ -11,6 +11,11 @@ export default new Router({
       component: require('@/components/HomePage')
     },
     {
+      path: '/config',
+      name: 'config-page',
+      component: require('@/components/ConfigPage')
+    },
+    {
       path: '*',
       redirect: '/'
     }

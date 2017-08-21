@@ -19,6 +19,10 @@ if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
+// LocalData
+store.commit('EDIT_LOCAL', store.state.electronStore.get('local', store.state.local))
+store.commit('UPDATE_PAGESPEED_KEY', store.state.electronStore.get('pagespeed.key', ''))
+
 /* eslint-disable no-new */
 new Vue({
   components: { App },

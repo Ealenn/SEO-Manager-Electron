@@ -15,6 +15,7 @@ export default {
   methods: {
     updateLocal (local) {
       this.$store.commit('EDIT_LOCAL', local)
+      this.$store.state.electronStore.set('local', local)
     }
   }
 }
