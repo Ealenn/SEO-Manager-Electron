@@ -1,7 +1,10 @@
 <template>
     <div class="ui active dimmer" v-if="show">
         <div class="ui text loader">
-            {{ $t('loading.default.text') }} <br /> {{ text }}
+            <p>
+              {{ $t('loading.default.text') }} <br /> 
+              {{ text }}
+            </p>
         </div>
     </div>
 </template>
