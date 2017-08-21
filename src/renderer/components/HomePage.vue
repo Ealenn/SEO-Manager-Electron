@@ -5,6 +5,7 @@
 
     <translate></translate>
     <website></website>
+    <wappalyzer></wappalyzer>
     <open-graph></open-graph>
     <keywords></keywords>
   </div>
@@ -15,6 +16,7 @@
   import Error from './Modules/Error'
   import Loading from './Modules/Loading'
   import Website from './Modules/Website'
+  import Wappalyzer from './Modules/Wappalyzer'
   import Keywords from './Modules/Keywords'
   import OpenGraph from './Modules/OpenGraph'
 
@@ -25,6 +27,7 @@
       Error,
       Loading,
       Website,
+      Wappalyzer,
       Keywords,
       OpenGraph
     },

@@ -9,6 +9,11 @@ export default {
   'website.form.input': 'http://',
   'website.form.button': 'Analyser',
   'website.form.error.content': 'Veuillez saisir une URL valide',
+  // Wappanalyzer
+  'wappalyzer.panel.title': 'Technologies',
+  'wappalyzer.array.name': 'Nom',
+  'wappalyzer.array.categories': 'Catégories',
+  'wappalyzer.array.confidence': 'Confiance',
   // Metadata
   'metadata.array.title': 'Métadonnée',
   'metadata.array.name': 'Nom',

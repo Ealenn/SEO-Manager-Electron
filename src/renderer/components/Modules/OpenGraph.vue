@@ -38,7 +38,6 @@
               name: elem.attribs.name,
               content: elem.attribs.content
             })
-            console.log(elem)
           })
         }
         return metaTags
