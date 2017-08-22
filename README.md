@@ -10,7 +10,7 @@
 - [x] Keyword list
 - [x] Open Graph, Twitter Card, and oEmbed Metadata
 - [ ] HTML JS CSS Analyse
-- [ ] PageSpeed Insights
+- [x] PageSpeed Insights
 - [ ] W3C (HTML / CSS)
 - [ ] Code Quality
 - [ ] Duplicate content

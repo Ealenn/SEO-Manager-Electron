@@ -8,6 +8,7 @@
     <wappalyzer></wappalyzer>
     <open-graph></open-graph>
     <keywords></keywords>
+    <pageSpeed></pageSpeed>
   </div>
 </template>
 
@@ -19,6 +20,7 @@
   import Wappalyzer from './Modules/Wappalyzer'
   import Keywords from './Modules/Keywords'
   import OpenGraph from './Modules/OpenGraph'
+  import PageSpeed from './Modules/Pagespeed'
 
   export default {
     name: 'home-page',
@@ -29,7 +31,8 @@
       Website,
       Wappalyzer,
       Keywords,
-      OpenGraph
+      OpenGraph,
+      PageSpeed
     },
     methods: {
       open (link) {
