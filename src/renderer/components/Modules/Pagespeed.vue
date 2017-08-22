@@ -1,6 +1,6 @@
 <template>
   <div class="column" v-if="typeof this.$store.state.Website.$ === 'function'">
-    <h4 class="ui top attached inverted header">Google PageSpeed</h4>
+    <h4 class="ui top attached inverted header">{{ $t('gpagespeed.panel.title') }}</h4>
     <div class="ui bottom attached segment">
       <div class="ui active inverted dimmer" v-if="showLoading && !this.$store.state.Loading.show">
         <div class="ui loader"></div>
@@ -32,9 +32,9 @@
       <table class="ui very basic table">
         <thead>
           <tr>
-            <th>Titre</th>
-            <th>Description</th>
-            <th>Impact</th>
+            <th>{{ $t('gpagespeed.array.title') }}</th>
+            <th>{{ $t('gpagespeed.array.description') }}</th>
+            <th>{{ $t('gpagespeed.array.impact') }}</th>
           </tr>
         </thead>
         <tbody>

@@ -28,5 +28,10 @@ export default {
   // Keywords
   'keywords.panel.title': 'Keywords',
   'keywords.array.word': 'Word',
-  'keywords.array.count': 'Count'
+  'keywords.array.count': 'Count',
+  // Google PageSpeed
+  'gpagespeed.panel.title': 'Google PageSpeed',
+  'gpagespeed.array.title': 'Title',
+  'gpagespeed.array.description': 'Description',
+  'gpagespeed.array.impact': 'Impact'
 }
