@@ -33,5 +33,13 @@ export default {
   'gpagespeed.panel.title': 'Google PageSpeed',
   'gpagespeed.array.title': 'Title',
   'gpagespeed.array.description': 'Description',
-  'gpagespeed.array.impact': 'Impact'
+  'gpagespeed.array.impact': 'Impact',
+  // W3C CSS
+  'w3c.panel.title': 'W3C CSS',
+  'w3c.array.context': 'Context',
+  'w3c.array.errortype': 'Error',
+  'w3c.array.message': 'Message',
+  'w3c.array.skippedstring': 'Skipped',
+  'w3c.array.type': 'Type',
+  'w3c.array.uri': 'File : Line'
 }

@@ -9,9 +9,9 @@
 - [x] Crawl
 - [x] Keyword list
 - [x] Open Graph, Twitter Card, and oEmbed Metadata
-- [ ] HTML JS CSS Analyse
+- [x] HTML JS CSS Analyse
 - [x] PageSpeed Insights
-- [ ] W3C (HTML / CSS)
+- [x] W3C (HTML / CSS)
 - [ ] Code Quality
 - [ ] Duplicate content
 - [ ] Indexation

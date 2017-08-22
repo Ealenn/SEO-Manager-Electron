@@ -9,6 +9,7 @@
     <open-graph></open-graph>
     <keywords></keywords>
     <pageSpeed></pageSpeed>
+    <w3c-css></w3c-css>
   </div>
 </template>
 
@@ -21,6 +22,7 @@
   import Keywords from './Modules/Keywords'
   import OpenGraph from './Modules/OpenGraph'
   import PageSpeed from './Modules/Pagespeed'
+  import W3cCss from './Modules/W3cCss'
 
   export default {
     name: 'home-page',
@@ -32,7 +34,8 @@
       Wappalyzer,
       Keywords,
       OpenGraph,
-      PageSpeed
+      PageSpeed,
+      W3cCss
     },
     methods: {
       open (link) {
