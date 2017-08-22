@@ -2,18 +2,16 @@
   <div class="column" v-if="meta.length > 0">
     <h4 class="ui top attached inverted header">{{ $t('metadata.array.title') }}</h4>
     <div class="ui bottom attached segment">
-      <table class="ui very basic table">
+      <table class="ui very basic fixed table">
         <thead>
           <tr>
-            <th>{{ $t('metadata.array.property') }}</th>
-            <th>{{ $t('metadata.array.name') }}</th>
+            <th>{{ $t('metadata.array.property') }} / {{ $t('metadata.array.name') }}</th>
             <th>{{ $t('metadata.array.content') }}</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(item, index) in meta">
-            <td>{{ item.property }}</td>
-            <td>{{ item.name }}</td>
+            <td>{{ item.property || item.name }}</td>
             <td>{{ item.content }}</td>
           </tr>
         </tbody>
