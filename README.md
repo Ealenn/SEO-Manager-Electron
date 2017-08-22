@@ -5,7 +5,7 @@
 
 > SEO Manager Generates a SEO Report Easily
 
-![](screen1.png)
+![](https://raw.githubusercontent.com/Ealenn/SEO-Manager-Electron/master/screen1.PNG)
 
 ## Features
 - [x] Crawl
@@ -26,8 +26,8 @@
 
 ## Screenshot
 
-![](screen2.png)
-![](screen3.png)
+![](https://raw.githubusercontent.com/Ealenn/SEO-Manager-Electron/master/screen2.PNG)
+![](https://raw.githubusercontent.com/Ealenn/SEO-Manager-Electron/master/screen3.PNG)
 
 ## Installation (Fork / Clone)
 
