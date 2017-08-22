@@ -6,16 +6,31 @@
       <div class="header">{{ $t('website.form.error.content') }}</div>
     </div>
 
-    <div class="ui form">
-      <div class="field">
-        <label>{{ $t('website.form.input.label') }} :</label>
-        <input v-model="url" class="prompt" type="url" :placeholder="$t('website.form.input')" autocomplete="off">
-      </div>
-      <div class="field centered">
+    <div class="ui grid" v-if="this.$store.state.Website.$ == null">
+      <div class="one wide column bottom aligned content">
         <router-link to="/config">
           <button class="ui icon button"><i class="setting icon"></i></button>
         </router-link>
-        <button v-on:click="update()" class="ui right labeled icon button"><i class="right arrow icon"></i> {{ $t('website.form.button') }} </button>
+      </div>
+      <div class="fifteen wide column">
+        <div class="ui form">
+          <div class="field">
+            <label>{{ $t('website.form.input.label') }} :</label>
+            <input v-model="url" class="prompt" type="url" :placeholder="$t('website.form.input')">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui form" v-if="this.$store.state.Website.$ == null">
+      <div class="field centered">
+        <button v-on:click="update()" class="ui right labeled icon teal button"><i class="right arrow icon"></i> {{ $t('website.form.button') }} </button>
+      </div>
+    </div>
+
+    <div class="ui form" v-if="this.$store.state.Website.$ != null">
+      <div class="field centered">
+        <button v-on:click="this.document.location.reload(true)" class="ui left labeled icon red button"><i class="undo icon"></i> {{ $t('website.form.button.reload') }} </button>
       </div>
     </div>
   </div>
@@ -80,5 +95,10 @@
 <style scoped>
 .centered {
   text-align: center!important
+}
+.ui.grid{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  vertical-align: top;
 }
 </style>

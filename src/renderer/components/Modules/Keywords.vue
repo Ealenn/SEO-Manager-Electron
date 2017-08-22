@@ -10,7 +10,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, index) in keywords" v-bind:sort="item.count">
+          <tr v-for="(item, index) in keywords" v-bind:sort="item.count" v-bind:key="item.word">
             <td>{{ item.word }}</td>
             <td>{{ item.count + 1 }}</td>
           </tr>

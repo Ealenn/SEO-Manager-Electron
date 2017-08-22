@@ -21,7 +21,7 @@
             <td>{{ getCategories(item.categories) }}</td>
             <td>
               <div class="ui tiny progress">
-                <div class="bar" :style="'width: ' + item.confidence + '%'"></div>
+                <div class="bar" :style="'width: ' + item.confidence + '%;background-color:' + getPrcColor(item.confidence)"></div>
                 <div class="label">{{ item.confidence }} %</div>
               </div>
             </td>
@@ -75,6 +75,29 @@
       },
       open (link) {
         this.$electron.shell.openExternal(link)
+      },
+      getPrcColor: function (prc, inversed = false) {
+        if (prc <= 10) {
+          return inversed ? '#4CAF50' : '#DD2C00'
+        } else if (prc > 10 && prc <= 20) {
+          return inversed ? '#8BC34A' : '#FF3D00'
+        } else if (prc > 20 && prc <= 30) {
+          return inversed ? '#00E676' : '#FF6E40'
+        } else if (prc > 30 && prc <= 40) {
+          return inversed ? '#69F0AE' : '#FF6D00'
+        } else if (prc > 40 && prc <= 50) {
+          return inversed ? '#FFD600' : '#FF9100'
+        } else if (prc > 50 && prc <= 60) {
+          return inversed ? '#FF6D00' : '#FFD600'
+        } else if (prc > 60 && prc <= 70) {
+          return inversed ? '#FF6D00' : '#69F0AE'
+        } else if (prc > 70 && prc <= 80) {
+          return inversed ? '#FF6E40' : '#00E676'
+        } else if (prc > 80 && prc <= 90) {
+          return inversed ? '#FF3D00' : '#8BC34A'
+        } else if (prc > 90) {
+          return inversed ? '#DD2C00' : '#4CAF50'
+        }
       }
     }
   }

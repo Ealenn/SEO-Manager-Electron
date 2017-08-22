@@ -5,6 +5,8 @@
 
 > SEO Manager Generates a SEO Report Easily
 
+![](screen1.png)
+
 ## Features
 - [x] Crawl
 - [x] Keyword list
@@ -21,6 +23,11 @@
 ## Language
 - [x] English
 - [x] Français
+
+## Screenshot
+
+![](screen2.png)
+![](screen3.png)
 
 ## Installation (Fork / Clone)
 
@@ -39,3 +46,4 @@ Build for production (Electron)
 ```bash
 npm run build
 ```
+

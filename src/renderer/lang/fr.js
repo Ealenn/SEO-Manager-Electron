@@ -14,6 +14,7 @@ export default {
   'website.form.input.label': 'Adresse URL du site web à analyser',
   'website.form.input': 'http://',
   'website.form.button': 'Analyser',
+  'website.form.button.reload': 'Recharger et réessayer',
   'website.form.error.content': 'Veuillez saisir une URL valide',
   // Wappanalyzer
   'wappalyzer.panel.title': 'Technologies',
