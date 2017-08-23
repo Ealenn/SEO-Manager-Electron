@@ -10,7 +10,8 @@
 ## Features
 - [x] Crawl
 - [x] Keyword list
-- [x] Open Graph, Twitter Card, and oEmbed Metadata
+- [x] Open Graph, Twitter Card, and oEmbed
+- [x] Microdata / RDFa-lite / JSON-LD
 - [x] HTML JS CSS Analyse
 - [x] PageSpeed Insights
 - [x] W3C (HTML / CSS)

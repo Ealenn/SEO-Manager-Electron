@@ -9,6 +9,10 @@ import App from './App'
 import router from './router'
 import store from './store'
 
+// Libs
+import TreeView from 'vue-json-tree-view'
+Vue.use(TreeView)
+
 // Lang
 Vue.use(vuexI18n.plugin, store)
 Vue.i18n.add('en', translationsEn)

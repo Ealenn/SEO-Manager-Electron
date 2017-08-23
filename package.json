@@ -68,11 +68,13 @@
     "validator": "^8.0.0",
     "vue": "^2.3.3",
     "vue-electron": "^1.0.6",
+    "vue-json-tree-view": "^2.1.1",
     "vue-router": "^2.5.3",
     "vuex": "^2.3.1",
     "vuex-i18n": "^1.6.0",
     "w3c-css": "^2.0.0",
-    "wappalyzer": "^5.0.2"
+    "wappalyzer": "^5.0.2",
+    "web-auto-extractor": "^1.0.16"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",

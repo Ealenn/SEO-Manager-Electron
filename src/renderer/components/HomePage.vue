@@ -5,8 +5,10 @@
 
     <translate></translate>
     <website></website>
+    
     <wappalyzer></wappalyzer>
     <open-graph></open-graph>
+    <microdata></microdata>
     <keywords></keywords>
     <pageSpeed></pageSpeed>
     <w3c-css></w3c-css>
@@ -23,6 +25,7 @@
   import OpenGraph from './Modules/OpenGraph'
   import PageSpeed from './Modules/Pagespeed'
   import W3cCss from './Modules/W3cCss'
+  import Microdata from './Modules/Microdata'
 
   export default {
     name: 'home-page',
@@ -35,7 +38,8 @@
       Keywords,
       OpenGraph,
       PageSpeed,
-      W3cCss
+      W3cCss,
+      Microdata
     },
     methods: {
       open (link) {
