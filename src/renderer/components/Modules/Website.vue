@@ -37,7 +37,6 @@
 </template>
 
 <script>
-  import validator from 'validator'
   const recrawler = require('recrawler')
 
   export default {
@@ -54,11 +53,8 @@
     },
     methods: {
       update () {
-        let isValide = validator.isUrl(this.url, {
-          protocols: ['http', 'https'],
-          require_host: true,
-          require_valid_protocol: true
-        })
+        let isValide = true
+        // Todo : Use regex
 
         if (isValide) {
           this.error = false
