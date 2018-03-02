@@ -16,7 +16,7 @@
         </thead>
         <tbody>
           <tr v-for="(item, index) in arrayWappalyzer">
-            <td><img :src="'https://wappalyzer.com/images/icons/' + item.icon" class="ui mini image" /></td>
+            <td><img :src="'https://www.wappalyzer.com/images/icons/' + item.icon" class="ui mini image" /></td>
             <td><a href="#" v-on:click="open(item.website)">{{ item.name }}</a></td>
             <td>{{ getCategories(item.categories) }}</td>
             <td>
