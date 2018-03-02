@@ -66,7 +66,7 @@
 </template>
 
 <script>
-  import isUrl from 'validator/lib/isUrl'
+  import validator from 'validator'
   export default {
     data () {
       return {
@@ -169,7 +169,7 @@
           }
         })
 
-        if (!isUrl(favicon)) {
+        if (!validator.isUrl(favicon)) {
           if (!favicon.substring(0, 2) === '//') {
             favicon = this.$store.state.Website.url + favicon
           }

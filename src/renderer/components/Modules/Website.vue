@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import isUrl from 'validator/lib/isUrl'
+  import validator from 'validator'
   const recrawler = require('recrawler')
 
   export default {
@@ -54,7 +54,7 @@
     },
     methods: {
       update () {
-        let isValide = isUrl(this.url, {
+        let isValide = validator.isUrl(this.url, {
           protocols: ['http', 'https'],
           require_host: true,
           require_valid_protocol: true
